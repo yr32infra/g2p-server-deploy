@@ -1,0 +1,43 @@
+services:
+  g2pserver:
+    image: ghcr.io/yanorei32/g2p-server:v0.1.0
+    hostname: g2pserver
+    container_name: g2pserver__g2pserver
+
+    restart: unless-stopped
+
+    environment:
+      MAXIMUM_LENGTH: 4000
+
+    deploy:
+      resources:
+        limits:
+          memory: 1024m
+
+    networks:
+      - default
+
+  cloudflared:
+    image: cloudflare/cloudflared:2025.11.1
+    hostname: cloudflared
+    container_name: g2pserver__cloudflared
+
+    restart: unless-stopped
+
+    environment:
+      TUNNEL_LOGFILE: /dev/stdout
+
+    command: tunnel run --token ${TUNNEL_TOKEN}
+    user: root
+
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+
+    networks:
+      default:
+
+networks:
+  default:
+    name: g2pserver__default
