@@ -1,6 +1,6 @@
 services:
   g2pserver:
-    image: ghcr.io/yanorei32/g2p-server:v0.1.2
+    image: ghcr.io/yanorei32/g2p-server:v0.2.0
     hostname: g2pserver
     container_name: g2pserver__g2pserver
 
